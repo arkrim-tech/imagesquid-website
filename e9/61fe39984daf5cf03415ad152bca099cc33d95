@@ -1,0 +1,18 @@
+.gitignore
+  h_10c93bba641ef0 1
+assets/ImageSquid-logo.svg
+  h_10c93bba641ef0 1-7
+index.html
+  h_10c93bba641ef0 1-1552
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e961fe39984daf5cf03415ad152bca099cc33d95",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
