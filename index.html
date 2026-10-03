@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>ImageSquid — Believe your eyes</title>
+    <meta
+      name="description"
+      content="An open-source, local-first photo and video manager. Reclaim control of your visual memories. Believe your eyes."
+    />
+    <meta property="og:title" content="ImageSquid — Believe your eyes" />
+    <meta
+      property="og:description"
+      content="A local-first photo and video library you own, with Content Credentials from the first import."
+    />
+    <meta property="og:image" content="assets/screen%202.png" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/ImageSquid-logo.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --radius-sm: 0.25rem;
+        --radius-lg: 0.5rem;
+        --radius-full: 9999px;
+        --space-xs: 0.25rem;
+        --space-sm: 0.5rem;
+        --space-md: 1rem;
+        --space-lg: 1.25rem;
+        --gutter: 1.5rem;
+        --font-display: "Hanken Grotesk", system-ui, sans-serif;
+        --font-body: Inter, system-ui, sans-serif;
+        --font-code: "JetBrains Mono", ui-monospace, monospace;
+        --background: #f8f9fc;
+        --on-background: #1a1c23;
+        --surface: #ffffff;
+        --surface-container-lowest: #ffffff;
+        --surface-container-low: #f3f4f8;
+        --surface-container: #eceef4;
+        --surface-container-high: #e3e6ee;
+        --on-surface: #1a1c23;
+        --on-surface-variant: #454a56;
+        --outline: #6b7280;
+        --outline-variant: #c5cad6;
+        --primary: #005db6;
+        --on-primary: #ffffff;
+        --primary-container: #d6e3ff;
+        --c2pa-trusted: #047857;
+        --c2pa-invalid: #b91c1c;
+        --c2pa-wellformed: #1d4ed8;
+        --status-unlisted: #b45309;
+        --shadow: 0 8px 24px rgb(15 23 42 / 8%);
+        --slate-700: #cbd5e1;
+        --mark-bg: #181f28;
+        --mark-fg: #ffffff;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 4.5rem;
+      }
+
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--on-surface);
+        font-family: var(--font-body);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5;
+        overflow-x: clip;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      a {
+        color: var(--primary);
+        text-decoration: none;
+        text-underline-offset: 0.3em;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--on-surface);
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2.75rem, 7vw, 4.5rem);
+        line-height: 1.05;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+
+      h3 {
+        font-size: 1.15rem;
+        line-height: 1.5rem;
+      }
+
+      p {
+        margin: 0;
+        color: var(--on-surface-variant);
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .label {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--on-surface-variant);
+        margin: 0 0 var(--space-sm);
+      }
+
+      .code {
+        font-family: var(--font-code);
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: 1rem;
+        top: -4rem;
+        z-index: 20;
+        padding: 0.75rem 1rem;
+        background: var(--primary);
+        color: var(--on-primary);
+        border-radius: var(--radius-sm);
+      }
+
+      .skip-link:focus {
+        top: 1rem;
+      }
+
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 4.25rem;
+        padding-block: 0.75rem;
+        padding-inline: clamp(1.5rem, 3vw, 4rem);
+        background: var(--background);
+      }
+
+      .coming-soon {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.125rem;
+        line-height: 1.3;
+        letter-spacing: -0.02em;
+        color: #767e8b;
+        text-align: center;
+      }
+
+      .page-shell,
+      .wide-shell,
+      .hero-shell {
+        margin-inline: auto;
+        width: 100%;
+        max-width: 80rem;
+        padding-inline: 1.5rem;
+      }
+
+      .wide-shell {
+        max-width: 120rem;
+        padding-inline: 1rem;
+      }
+
+      .hero-shell {
+        max-width: none;
+        padding-inline: clamp(1.5rem, 3vw, 4rem);
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero {
+        display: grid;
+        gap: 2.5rem;
+        padding-block: 3.25rem 4.25rem;
+        align-items: start;
+      }
+
+      .hero-copy,
+      .hero-shot {
+        min-width: 0;
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .hero-lockup {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: fit-content;
+        max-width: 100%;
+        margin-inline: auto;
+      }
+
+      .hero-brand {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: clamp(0.55rem, 1.6vw, 1rem);
+        margin: 0 0 0.85rem;
+        max-width: 100%;
+      }
+
+      .hero-logo {
+        display: block;
+        width: clamp(3.25rem, 9vw, 7.25rem);
+        height: clamp(3.25rem, 9vw, 7.25rem);
+        flex-shrink: 0;
+        margin: 0;
+      }
+
+      .hero-wordmark {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(1.7rem, 7vw, 4.5rem);
+        line-height: 1;
+        letter-spacing: -0.035em;
+        color: var(--on-surface);
+        min-width: 0;
+      }
+
+      .hero-copy h1 {
+        width: 0;
+        min-width: 100%;
+        margin: 0;
+        font-size: clamp(1.15rem, 4.6vw, 2.85rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: #767e8b;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .hero-copy .intro {
+        width: 0;
+        min-width: 100%;
+        margin: 1.25rem 0 0;
+        font-size: 1.08rem;
+        line-height: 1.7;
+        text-align: left;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        color: #6b7280;
+      }
+
+      .hero-copy .intro p {
+        margin: 0;
+        color: inherit;
+      }
+
+      .hero-copy .intro p + p {
+        margin-top: 1em;
+      }
+
+      .hero-copy .intro p:first-child + p {
+        margin-top: 1.7em;
+      }
+
+      .hero-copy .intro a {
+        color: var(--primary);
+        text-underline-offset: 0.18em;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1.75rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.75rem;
+        padding: 0 1.15rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.25;
+        text-decoration: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-family: inherit;
+      }
+
+      .btn:hover {
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: var(--on-primary);
+      }
+
+      .btn-primary:hover {
+        filter: brightness(1.06);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--on-surface);
+        border-color: var(--outline-variant);
+      }
+
+      .btn-ghost:hover {
+        background: var(--surface-container);
+      }
+
+      .hero-shot,
+      .c2pa-shot {
+        margin: 0;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        border: 1px solid #000;
+        box-shadow: var(--shadow);
+        position: relative;
+        z-index: 1;
+        transform-origin: center center;
+        transition: transform 0.22s ease, box-shadow 0.22s ease;
+      }
+
+      .hero-shot img,
+      .c2pa-shot img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .hero-shot:hover,
+        .c2pa-shot:hover {
+          z-index: 40;
+          transform: scale(1.5);
+          box-shadow: 0 28px 80px rgb(15 23 42 / 28%);
+        }
+      }
+
+      body:has(.hero-shot:hover),
+      body:has(.c2pa-shot:hover) {
+        overflow-x: visible;
+      }
+
+      .believe-band {
+        display: grid;
+        justify-items: center;
+        text-align: center;
+        gap: 0.85rem;
+        padding: 3.25rem 1rem;
+        border-block: 1px solid var(--slate-700);
+      }
+
+      .believe-band img {
+        width: 72px;
+        height: 72px;
+        border-radius: 1rem;
+      }
+
+      .believe-band p {
+        font-family: var(--font-display);
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: var(--on-surface);
+        line-height: 1.15;
+      }
+
+      .believe-band span {
+        color: var(--primary);
+      }
+
+      .story,
+      .product,
+      .points,
+      .gallery,
+      .close {
+        padding-block: 3.25rem;
+      }
+
+      .section-head {
+        max-width: 40rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .section-head p {
+        margin-top: 0.7rem;
+      }
+
+      .fold {
+        background: var(--surface-container);
+        border: 1px solid var(--outline-variant);
+        border-radius: var(--radius-lg);
+        padding: 1.15rem 1.25rem;
+      }
+
+      .fold + .fold {
+        margin-top: 0.85rem;
+      }
+
+      .fold summary {
+        cursor: pointer;
+        list-style: none;
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .fold summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .fold summary .more {
+        color: var(--primary);
+        font-size: 0.8125rem;
+        font-weight: 600;
+      }
+
+      .fold[open] summary .more {
+        color: var(--on-surface-variant);
+      }
+
+      .fold .body {
+        display: grid;
+        gap: 0.85rem;
+        padding-top: 1rem;
+        max-width: 46rem;
+      }
+
+      .fold .body p + p {
+        margin-top: 0;
+      }
+
+      .tip {
+        border-bottom: 1px dotted var(--outline);
+        cursor: help;
+      }
+
+      .app-stage {
+        padding-block: 1rem 3.5rem;
+      }
+
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin: 1.25rem 0 1rem;
+      }
+
+      .tab {
+        min-height: 2.5rem;
+        padding: 0 0.95rem;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--outline-variant);
+        background: var(--surface-container-low);
+        color: var(--on-surface-variant);
+        font: 600 0.875rem/1 var(--font-body);
+        cursor: pointer;
+      }
+
+      .tab[aria-selected="true"] {
+        background: var(--primary);
+        color: var(--on-primary);
+        border-color: transparent;
+      }
+
+      .shot-frame {
+        margin: 0;
+        padding: 0.65rem;
+        background: var(--surface-container);
+        border: 1px solid var(--slate-700);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+      }
+
+      .shot-frame button {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: var(--surface-container-lowest);
+        border-radius: var(--radius-sm);
+        cursor: zoom-in;
+      }
+
+      .shot-frame img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        background: #f4f5f8;
+        border-radius: var(--radius-sm);
+      }
+
+      .shot-frame figcaption {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem 1rem;
+        padding: 0.9rem 0.35rem 0.25rem;
+        color: var(--on-surface-variant);
+        font-size: 0.8125rem;
+      }
+
+      .shot-frame figcaption > span:first-child {
+        font: 500 0.8125rem/1rem var(--font-code);
+        color: var(--on-surface);
+      }
+
+      .points-grid {
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .point {
+        display: grid;
+        grid-template-columns: 3rem 1fr;
+        gap: 0.95rem 1rem;
+        align-items: start;
+        background: var(--surface-container);
+        border: 1px solid var(--outline-variant);
+        border-radius: var(--radius-lg);
+        padding: 1.1rem 1.15rem;
+      }
+
+      .point svg {
+        width: 3rem;
+        height: 3rem;
+        display: block;
+      }
+
+      .point h3 {
+        margin-bottom: 0.3rem;
+      }
+
+      .point .teaser {
+        font-size: 0.95rem;
+      }
+
+      .point details {
+        grid-column: 2;
+      }
+
+      .point summary {
+        cursor: pointer;
+        color: var(--primary);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        width: fit-content;
+        margin-top: 0.55rem;
+      }
+
+      .point .body {
+        display: grid;
+        gap: 0.8rem;
+        padding-top: 0.75rem;
+      }
+
+      .media-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: var(--space-sm);
+        min-width: 0;
+      }
+
+      .media-card {
+        position: relative;
+        display: block;
+        padding: 0;
+        border: 1px solid var(--outline-variant);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+        background: var(--surface-container-low);
+        cursor: pointer;
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        grid-column: span 6;
+      }
+
+      .media-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        aspect-ratio: 1 / 1;
+      }
+
+      .media-card.wide img {
+        aspect-ratio: 16 / 10;
+      }
+
+      .media-card.tall img {
+        aspect-ratio: 2 / 3;
+      }
+
+      .cr-badge {
+        position: absolute;
+        right: 0.5rem;
+        bottom: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.25rem 0.55rem;
+        border-radius: var(--radius-full);
+        background: rgb(16 19 27 / 78%);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgb(255 255 255 / 14%);
+        font-family: var(--font-code);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: #fff;
+      }
+
+      .dot {
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 50%;
+        display: inline-block;
+        background: var(--c2pa-wellformed);
+      }
+
+      .dot.trusted,
+      .cr-badge.trusted .dot {
+        background: var(--c2pa-trusted);
+      }
+
+      .dot.ai,
+      .cr-badge.ai .dot {
+        background: var(--status-unlisted);
+      }
+
+      .dot.wellformed,
+      .cr-badge.wellformed .dot {
+        background: var(--c2pa-wellformed);
+      }
+
+      .legend {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gutter);
+        padding: 0;
+        margin: var(--gutter) 0 0;
+        font-family: var(--font-code);
+        font-size: 12px;
+        color: var(--on-surface-variant);
+      }
+
+      .legend li {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .close {
+        text-align: center;
+        padding-bottom: 4.5rem;
+      }
+
+      .close img {
+        width: 88px;
+        height: 88px;
+        margin: 0 auto 1.15rem;
+        border-radius: 1.15rem;
+      }
+
+      .close p {
+        max-width: 36rem;
+        margin: 0.85rem auto 1.5rem;
+      }
+
+      .close .hero-actions {
+        justify-content: center;
+        margin-top: 0;
+      }
+
+      .site-footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem 2rem;
+        border-top: 1px solid var(--slate-700);
+        padding-block: 1.5rem 2.5rem;
+        color: var(--on-surface-variant);
+        font-size: 0.8125rem;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin: 0;
+        color: var(--on-surface-variant);
+      }
+
+      .footer-brand img {
+        width: 28px;
+        height: 28px;
+        border-radius: 0.4rem;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+      }
+
+      .footer-links a {
+        color: var(--on-surface-variant);
+      }
+
+      .panel-status {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin: 0.75rem 0;
+        color: var(--on-surface);
+      }
+
+      .meta {
+        margin: 0;
+        display: grid;
+        gap: var(--space-sm);
+      }
+
+      .meta div {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--space-md);
+        padding: 0.45rem 0.6rem;
+        background: var(--surface-container-low);
+        border: 1px solid var(--outline-variant);
+        border-radius: var(--radius-sm);
+      }
+
+      .meta dt {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--on-surface-variant);
+      }
+
+      .meta dd {
+        margin: 0;
+        font-family: var(--font-code);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--on-surface);
+        text-align: right;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      summary:focus-visible,
+      select:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      @media (min-width: 768px) {
+        .page-shell {
+          padding-inline: 2rem;
+        }
+
+        .wide-shell {
+          padding-inline: 1.5rem;
+        }
+
+        .points-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .media-card.span-8 {
+          grid-column: span 8;
+        }
+
+        .media-card.span-4 {
+          grid-column: span 4;
+        }
+
+        .media-card.span-3 {
+          grid-column: span 3;
+        }
+
+        .media-card.span-6 {
+          grid-column: span 6;
+        }
+
+        .media-card.wide img,
+        .media-card.tall img {
+          height: 100%;
+          min-height: 16rem;
+          aspect-ratio: auto;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .page-shell {
+          padding-inline: 3rem;
+        }
+
+        .hero {
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(2rem, 3vw, 3.5rem);
+          padding-block: 4rem 4.5rem;
+        }
+
+        .shot-frame img {
+          min-height: 0;
+        }
+
+        .points-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .point {
+          grid-template-columns: 3.25rem 1fr;
+          padding: 1.25rem 1.4rem;
+        }
+      }
+
+      @media (min-width: 1280px) {
+        .points-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 480px) {
+        .point {
+          grid-template-columns: 2.5rem 1fr;
+        }
+
+        .point svg {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+
+        .point details {
+          grid-column: 1 / -1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .hero-shot,
+        .c2pa-shot {
+          transition: none;
+        }
+
+        .belief-arrow {
+          transition: none;
+        }
+      }
+
+      .belief-band {
+        position: relative;
+        z-index: 0;
+        padding-block: 0.25rem 0;
+      }
+
+      .belief-band .wrap {
+        width: 100%;
+        margin: 0;
+      }
+
+      .belief-expand {
+        box-sizing: border-box;
+        margin: 0;
+        margin-left: var(--logo-left, clamp(1.5rem, 3vw, 4rem));
+        width: calc(var(--shot-right, 100%) - var(--logo-left, 0px));
+        max-width: calc(100% - var(--logo-left, 2rem));
+        border-left: 2px solid var(--primary);
+        padding: 0.25rem 0 0.25rem 1.5rem;
+        font-size: 1.125rem;
+        line-height: 1.5;
+        color: var(--on-surface);
+      }
+
+      .belief-expand summary {
+        cursor: pointer;
+        list-style: none;
+      }
+
+      .belief-expand summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .belief-title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        width: max-content;
+        max-width: 100%;
+        margin: 0 0 0.35rem;
+      }
+
+      .belief-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 1.2rem;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.02em;
+        color: var(--on-surface);
+      }
+
+      .belief-expand summary p {
+        margin: 0;
+      }
+
+      .belief-arrow {
+        flex-shrink: 0;
+        display: inline-flex;
+        color: #000;
+        transition: transform 0.15s ease;
+      }
+
+      .belief-arrow svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      .belief-expand[open] .belief-arrow {
+        transform: rotate(180deg);
+      }
+
+      .belief-rest {
+        padding-top: 1em;
+      }
+
+      .belief-rest p {
+        margin: 0;
+      }
+
+      .belief-rest p + p {
+        margin-top: 1em;
+      }
+
+      #your-library {
+        position: relative;
+        z-index: 0;
+        padding-block: 3.5rem 5.5rem;
+      }
+
+      #your-library .wrap {
+        width: min(80rem, calc(100% - 4rem));
+        margin-inline: auto;
+      }
+
+      .c2pa-band {
+        position: relative;
+        z-index: 2;
+        padding: 1rem 15% 4.5rem;
+      }
+
+      .c2pa-heading {
+        font-family: var(--font-display);
+        font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        font-weight: 700;
+        color: #767e8b;
+        margin: 0 0 1.5rem;
+        text-align: center;
+      }
+
+      .c2pa-caption {
+        margin: 1.25rem 15% 0;
+        font-size: 1.08rem;
+        line-height: 1.7;
+        color: #6b7280;
+      }
+
+      .c2pa-caption a {
+        color: var(--primary);
+        text-underline-offset: 0.18em;
+      }
+
+      #your-library .principle-head {
+        margin-bottom: 2.5rem;
+      }
+
+      #your-library .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        font-weight: 700;
+        color: var(--on-surface);
+        margin: 0;
+      }
+
+      #your-library .principle-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.1rem;
+        align-items: start;
+      }
+
+      #your-library .principle {
+        border: 1px solid var(--outline-variant);
+        border-radius: 0.65rem;
+        background: var(--surface-container-low);
+      }
+
+      #your-library .principle summary {
+        list-style: none;
+        display: flex;
+        align-items: flex-start;
+        gap: 1.1rem;
+        padding: 1.65rem 1.7rem;
+        cursor: pointer;
+      }
+
+      #your-library .principle summary::-webkit-details-marker {
+        display: none;
+      }
+
+      #your-library .feature-icon {
+        width: 2.9rem;
+        height: 2.9rem;
+        flex: none;
+        border-radius: 0.7rem;
+        background: var(--mark-bg);
+        color: var(--mark-fg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #your-library .feature-icon svg {
+        width: 1.9rem;
+        height: 1.9rem;
+      }
+
+      #your-library .principle {
+        min-width: 0;
+      }
+
+      #your-library .principle summary {
+        min-width: 0;
+      }
+
+      #your-library .detail-text {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      #your-library .detail-title {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--on-surface);
+      }
+
+      #your-library .detail-lead {
+        display: block;
+        margin-top: 0.4rem;
+        color: var(--on-surface-variant);
+        font-size: 0.875rem;
+        line-height: 1.55;
+        overflow-wrap: break-word;
+      }
+
+      #your-library .plus {
+        color: var(--primary);
+        margin-left: auto;
+        flex-shrink: 0;
+        display: inline-block;
+        font-size: 1.45rem;
+        line-height: 1.2;
+        font-weight: 500;
+        transition: transform 0.15s ease;
+      }
+
+      #your-library .principle[open] .plus {
+        transform: rotate(45deg);
+      }
+
+      #your-library .principle .detail-copy {
+        padding: 0 1.7rem 0.6rem;
+        color: var(--on-surface-variant);
+        font-size: 0.95rem;
+        line-height: 1.65;
+      }
+
+      #your-library .principle[open] summary {
+        padding-bottom: 1.15rem;
+      }
+
+      #your-library .principle[open] .detail-copy {
+        border-top: 1px solid var(--outline-variant);
+        padding-top: 1.35rem;
+        padding-bottom: 1.5rem;
+      }
+
+      #your-library .detail-copy p + p {
+        margin-top: 1rem;
+      }
+
+      @media (max-width: 900px) {
+        .belief-expand {
+          font-size: 1rem;
+          padding-left: 1.15rem;
+        }
+
+        #your-library .wrap {
+          width: calc(100% - 2.5rem);
+        }
+
+        #your-library .principle-head {
+          margin-bottom: 1.75rem;
+        }
+
+        #your-library .principle-grid {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+        }
+
+        #your-library .principle summary {
+          padding: 1.35rem 1.1rem;
+          gap: 0.75rem;
+        }
+
+        #your-library .feature-icon {
+          width: 2.45rem;
+          height: 2.45rem;
+          border-radius: 0.55rem;
+        }
+
+        #your-library .feature-icon svg {
+          width: 1.6rem;
+          height: 1.6rem;
+        }
+
+        #your-library .plus {
+          font-size: 1.25rem;
+        }
+
+        #your-library .principle .detail-copy {
+          padding-inline: 1.1rem;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <p class="coming-soon">Coming Soon!</p>
+    </header>
+
+    <main id="main">
+      <div class="hero-shell">
+        <section class="hero" id="top" aria-labelledby="hero-heading">
+          <div class="hero-copy">
+            <div class="hero-lockup">
+              <div class="hero-brand">
+                <img class="hero-logo" src="assets/ImageSquid-logo.svg" alt="" width="1024" height="1024" />
+                <p class="hero-wordmark">ImageSquid</p>
+              </div>
+              <h1 id="hero-heading">Believe your eyes</h1>
+              <div class="intro">
+                <p>
+                  ImageSquid is a local-first photo manager that exists to help people reclaim control of their visual
+              memories, while providing clarity on AI use via full
+              <a href="https://contentcredentials.org/" rel="noopener noreferrer">C2PA</a>
+              support.
+                </p>
+              </div>
+            </div>
+          </div>
+          <figure class="hero-shot">
+            <img
+              src="assets/screen%202.png"
+              alt="ImageSquid library showing All Photos with a Content Credentials provenance card"
+              width="1600"
+              height="1100"
+              fetchpriority="high"
+            />
+          </figure>
+        </section>
+      </div>
+
+      <section class="belief-band" aria-label="Why ImageSquid">
+        <div class="wrap">
+          <details class="belief-expand">
+            <summary>
+              <div class="belief-title-row">
+                <p class="belief-title">Why ImageSquid?</p>
+                <span class="belief-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </span>
+              </div>
+              <p>
+                Photographs and videos are among our most personal and
+                irreplaceable possessions, we invest years in curating
+                collections.
+              </p>
+            </summary>
+            <div class="belief-rest">
+              <p>
+                However, big tech commercial platforms control how our precious
+                memories are stored, organized, accessed, and shared while we
+                also rely on their AI tools to process our own images.
+              </p>
+              <p>
+                At the same time, thanks to widespread use of AI, we are losing
+                trust in the authenticity and provenance of online images.
+              </p>
+              <p>ImageSquid exists to address these problems.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" id="your-library" aria-labelledby="library-heading">
+        <div class="wrap">
+          <div class="principle-head">
+            <h2 class="section-title" id="library-heading">
+              Your library, your rules.<br />
+              Free and open-source.
+            </h2>
+          </div>
+          <div class="principle-grid">
+            <details class="principle">
+              <summary>
+                <span class="feature-icon">
+                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="8" y="12" width="32" height="26" rx="5" />
+                    <path d="m12 30 8-8 9 10 5-5 6 7" />
+                    <circle cx="31" cy="20" r="2" />
+                  </svg>
+                </span>
+                <span class="detail-text">
+                  <span class="detail-title">Full media ownership</span>
+                  <span class="detail-lead">The files, the edits, and the meaning you’ve added.</span>
+                </span>
+                <span class="plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="detail-copy">
+                <p>
+                  Media ownership means more than just access to image files: it
+                  means retaining available descriptions, dates, edits,
+                  organization, relationships, and source context that give those
+                  images meaning.
+                </p>
+                <p>
+                  ImageSquid aims to make independent media ownership convenient.
+                  Users should have a fast, capable application for finding,
+                  enhancing, enjoying, and sharing their collections across
+                  devices and operating systems.
+                </p>
+              </div>
+            </details>
+            <details class="principle">
+              <summary>
+                <span class="feature-icon">
+                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M16 16h-3a9 9 0 0 0 0 18h8m11-18h3a9 9 0 0 1 0 18h-8M17 25h14" />
+                  </svg>
+                </span>
+                <span class="detail-text">
+                  <span class="detail-title">Data portability</span>
+                  <span class="detail-lead">Free to use. Free to move. Free to leave.</span>
+                </span>
+                <span class="plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="detail-copy">
+                <p>
+                  ImageSquid libraries remain usable offline, portable between
+                  providers, and exportable if users quit ImageSquid. Optional
+                  hosting and synchronization supports that freedom.
+                </p>
+                <p>
+                  ImageSquid's business model is to offer all application
+                  features as free and open-source software and provide a
+                  freemium upgrade for ImageSquid.app backup and syncing
+                  service.
+                </p>
+                <p>
+                  This is a similar approach to the Obsidian note management
+                  tool. Obsidian is free but closed source. With ImageSquid's
+                  open-source license users can clone the same software from our
+                  Git repo and host their own backup and sync infrastructure if
+                  they choose.
+                </p>
+                <p>
+                  To be clear, ImageSquid users must be able to leave a hosting
+                  provider, work offline, recover from mistakes, and leave
+                  ImageSquid the app and the optional online service at any time
+                  without losing original media, subsequent enhancements or
+                  metadata enrichment.
+                </p>
+                <p>
+                  This principle and its practical implementation is based
+                  heavily on the Personal Data Server primitive used in the AT
+                  Protocol architecture by platforms like Bluesky.
+                </p>
+              </div>
+            </details>
+            <details class="principle">
+              <summary>
+                <span class="feature-icon">
+                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 19h30v20H9zM7 11h34v8H7zM20 27h8" />
+                    <path d="M17 6h14" />
+                  </svg>
+                </span>
+                <span class="detail-text">
+                  <span class="detail-title">Long-term access</span>
+                  <span class="detail-lead">A proper archive, without becoming an archivist.</span>
+                </span>
+                <span class="plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="detail-copy">
+                <p>
+                  ImageSquid is designed from the perspective of professional
+                  archival collections management. It adopts a long-term view of
+                  the stewardship, findability, usability, and trustworthiness
+                  of the digital files in the system's care.
+                </p>
+                <p>
+                  Original media and its accumulated context are preserved using
+                  open archival standards so collections remain recoverable,
+                  understandable, and reusable over time.
+                </p>
+                <p>
+                  A key component of this approach is the capability to use the
+                  files that ImageSquid stores on disk as the canonical data
+                  source. If any of the application layer or its indexes are
+                  corrupted or removed, the user will have the option to rebuild
+                  the application layer in full using the source files stored in
+                  OCFL (Oxford Common File Layout) objects.
+                </p>
+                <p>
+                  OCFL is the digital archives industry's best practice for
+                  storing versioned files and inventories on disk so a
+                  collection remains inspectable and rebuildable with ordinary
+                  file tools, independent of ImageSquid's catalog or an online
+                  platform.
+                </p>
+                <p>
+                  ImageSquid brings this discipline and professional design into
+                  everyday image management without requiring users to become
+                  archivists or system administrators.
+                </p>
+              </div>
+            </details>
+            <details class="principle">
+              <summary>
+                <span class="feature-icon">
+                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="11" y="12" width="26" height="25" rx="10" />
+                    <path d="M18 24c0-5 5-5 5 0m3 0c0-5 5-5 5 0M24 6v6M6 24h5m26 0h5M18 37v5m12-5v5" />
+                  </svg>
+                </span>
+                <span class="detail-text">
+                  <span class="detail-title">Private AI processing</span>
+                  <span class="detail-lead">Your models. Your provider. Your decision.</span>
+                </span>
+                <span class="plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="detail-copy">
+                <p>
+                  The actual AI inference models used in ImageSquid processing
+                  tasks and end-user features should remain the user's choice.
+                </p>
+                <p>
+                  ImageSquid can connect to a local AI runner and open-source
+                  model (for example llama.cpp + Gemma 4) using the
+                  industry-standard OpenAI API format, or to the owner's own
+                  supported frontier-provider account; the user pays that
+                  provider directly. This is bring-your-own (BYO) inference. The
+                  AI Connections surface explains that arrangement, including
+                  that encrypted backup does not receive inference traffic and
+                  that a remote endpoint can read what the owner sends.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="c2pa-band" aria-labelledby="c2pa-heading">
+        <h2 class="c2pa-heading" id="c2pa-heading">C2PA support</h2>
+        <figure class="c2pa-shot">
+          <img
+            src="assets/screen%203.png"
+            alt="ImageSquid media inspector showing an AI-generated squid portrait with a C2PA Synthetic Manifest badge, C2PA version in the title bar, and Metadata, C2PA, and Archive tabs"
+            width="1600"
+            height="1100"
+          />
+        </figure>
+        <p class="c2pa-caption">
+          Every ImageSquid import generates a new
+          <a href="https://contentcredentials.org/" rel="noopener noreferrer">C2PA</a>
+          (Coalition for Content Provenance and Authenticity) Content Credentials
+          record for that image. Or it verifies and displays existing C2PA records upon import.</p>
+        <p class="c2pa-caption">ImageSquid's C2PA inspector allows for detailed review and management of image metadata.</p>
+        <p class="c2pa-caption">By using C2PA, a file can declare whether it came from a camera, an AI image generator, or both, while keeping later edits auditable.</p>
+      </section>
+
+      <div class="page-shell">
+        <footer class="site-footer">
+          <p class="footer-brand">
+            <img src="assets/ImageSquid-logo.svg" alt="" width="28" height="28" />
+            ImageSquid · Believe your eyes
+          </p>
+          <p class="footer-links">
+            <a href="https://iona.ltd" rel="noopener noreferrer">© 2026 Iona Systems Ltd</a>
+          </p>
+        </footer>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        const brand = document.querySelector(".hero-brand");
+        const title = document.getElementById("hero-heading");
+        if (!brand || !title) return;
+
+        const probe = document.createElement("span");
+        probe.setAttribute("aria-hidden", "true");
+        probe.textContent = title.textContent;
+        probe.style.cssText =
+          "position:absolute;left:-9999px;top:0;white-space:nowrap;font-size:100px;pointer-events:none;";
+        document.body.appendChild(probe);
+
+        const fit = () => {
+          const target = brand.getBoundingClientRect().width;
+          const cs = getComputedStyle(title);
+          probe.style.fontFamily = cs.fontFamily;
+          probe.style.fontWeight = cs.fontWeight;
+          probe.style.fontStyle = cs.fontStyle;
+          probe.style.letterSpacing = cs.letterSpacing;
+          probe.style.fontSize = "100px";
+          const natural = probe.getBoundingClientRect().width;
+          if (target <= 0 || natural <= 0) return;
+          title.style.fontSize = (100 * target) / natural + "px";
+          window.dispatchEvent(new Event("imagesquid:lockup"));
+        };
+
+        fit();
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(fit);
+        }
+        if (typeof ResizeObserver === "function") {
+          new ResizeObserver(fit).observe(brand);
+        } else {
+          window.addEventListener("resize", fit);
+        }
+      })();
+
+      (function () {
+        const logo = document.querySelector(".hero-logo");
+        const lockup = document.querySelector(".hero-lockup");
+        const shot = document.querySelector(".hero-shot");
+        if (!logo) return;
+
+        const align = () => {
+          const left = Math.max(0, Math.round(logo.getBoundingClientRect().left));
+          document.documentElement.style.setProperty("--logo-left", left + "px");
+          if (shot) {
+            const right = Math.round(shot.getBoundingClientRect().right);
+            document.documentElement.style.setProperty("--shot-right", right + "px");
+          }
+        };
+
+        align();
+        requestAnimationFrame(align);
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(() => {
+            align();
+            requestAnimationFrame(align);
+          });
+        }
+        if (typeof ResizeObserver === "function") {
+          new ResizeObserver(align).observe(logo);
+          if (lockup) new ResizeObserver(align).observe(lockup);
+          if (shot) new ResizeObserver(align).observe(shot);
+        }
+        window.addEventListener("resize", align);
+        window.addEventListener("imagesquid:lockup", align);
+      })();
+    </script>
+  </body>
+</html>
