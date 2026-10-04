@@ -1012,6 +1012,22 @@
         padding: 1rem 15% 4.5rem;
       }
 
+      @media (max-width: 1023px) {
+        .c2pa-band {
+          padding-inline: clamp(1.5rem, 3vw, 4rem);
+        }
+
+        .c2pa-shot {
+          width: 100%;
+        }
+
+        .belief-expand {
+          margin-left: var(--shot-left, clamp(1.5rem, 3vw, 4rem));
+          width: calc(var(--shot-right, 100%) - var(--shot-left, 0px));
+          max-width: calc(100% - var(--shot-left, 1.5rem));
+        }
+      }
+
       .c2pa-heading {
         font-family: var(--font-display);
         font-size: clamp(2.25rem, 4.5vw, 3.25rem);
@@ -1519,8 +1535,15 @@
           const left = Math.max(0, Math.round(logo.getBoundingClientRect().left));
           document.documentElement.style.setProperty("--logo-left", left + "px");
           if (shot) {
-            const right = Math.round(shot.getBoundingClientRect().right);
-            document.documentElement.style.setProperty("--shot-right", right + "px");
+            const box = shot.getBoundingClientRect();
+            document.documentElement.style.setProperty(
+              "--shot-left",
+              Math.max(0, Math.round(box.left)) + "px"
+            );
+            document.documentElement.style.setProperty(
+              "--shot-right",
+              Math.round(box.right) + "px"
+            );
           }
         };
 
