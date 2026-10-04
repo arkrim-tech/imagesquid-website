@@ -1,0 +1,14 @@
+index.html
+  h_10c93bba641ef0 1458
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "b82ac50490a867472d9870c6b9f7bf7e615f3947",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
