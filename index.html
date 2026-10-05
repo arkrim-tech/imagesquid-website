@@ -729,6 +729,9 @@
       }
 
       .site-footer {
+        --footer-mark: 28px;
+        --footer-mark-gap: 0.55rem;
+        container-type: inline-size;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -743,15 +746,22 @@
       .footer-brand {
         display: flex;
         align-items: center;
-        gap: 0.55rem;
+        gap: var(--footer-mark-gap);
         margin: 0;
         color: var(--on-surface-variant);
       }
 
       .footer-brand img {
-        width: 28px;
-        height: 28px;
+        width: var(--footer-mark);
+        height: var(--footer-mark);
         border-radius: 0.4rem;
+      }
+
+      /* The row wraps just under 418px. Indent only then, so the wide row stays flush right. */
+      @container (max-width: 417px) {
+        .footer-links {
+          padding-inline-start: calc(var(--footer-mark) + var(--footer-mark-gap));
+        }
       }
 
       .footer-links {
@@ -1103,9 +1113,10 @@
         justify-content: center;
       }
 
-      #your-library .feature-icon svg {
+      #your-library .feature-icon img {
         width: 1.9rem;
         height: 1.9rem;
+        max-width: none;
       }
 
       #your-library .principle {
@@ -1205,7 +1216,7 @@
           border-radius: 0.55rem;
         }
 
-        #your-library .feature-icon svg {
+        #your-library .feature-icon img {
           width: 1.6rem;
           height: 1.6rem;
         }
@@ -1298,23 +1309,17 @@
         <div class="wrap">
           <div class="principle-head">
             <h2 class="section-title" id="library-heading">
-              Your library, your rules.<br />
-              Free and open-source.
-            </h2>
+              Your library, your rules.</h2>
           </div>
           <div class="principle-grid">
             <details class="principle">
               <summary>
                 <span class="feature-icon">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="8" y="12" width="32" height="26" rx="5" />
-                    <path d="m12 30 8-8 9 10 5-5 6 7" />
-                    <circle cx="31" cy="20" r="2" />
-                  </svg>
+                  <img src="assets/media-ownership.svg" alt="" width="48" height="48" />
                 </span>
                 <span class="detail-text">
-                  <span class="detail-title">Full media ownership</span>
-                  <span class="detail-lead">The files, the edits, and the meaning you’ve added.</span>
+                  <span class="detail-title">Media ownership</span>
+                  <span class="detail-lead">Local first, yours to keep</span>
                 </span>
                 <span class="plus" aria-hidden="true">+</span>
               </summary>
@@ -1336,13 +1341,11 @@
             <details class="principle">
               <summary>
                 <span class="feature-icon">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M16 16h-3a9 9 0 0 0 0 18h8m11-18h3a9 9 0 0 1 0 18h-8M17 25h14" />
-                  </svg>
+                  <img src="assets/data-portability.svg" alt="" width="48" height="48" />
                 </span>
                 <span class="detail-text">
                   <span class="detail-title">Data portability</span>
-                  <span class="detail-lead">Free to use. Free to move. Free to leave.</span>
+                  <span class="detail-lead">Free to move. Easy to leave.</span>
                 </span>
                 <span class="plus" aria-hidden="true">+</span>
               </summary>
@@ -1382,14 +1385,77 @@
             <details class="principle">
               <summary>
                 <span class="feature-icon">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M9 19h30v20H9zM7 11h34v8H7zM20 27h8" />
-                    <path d="M17 6h14" />
-                  </svg>
+                  <img src="assets/open-source.svg" alt="" width="48" height="48" />
+                </span>
+                <span class="detail-text">
+                  <span class="detail-title">Free and open source</span>
+                  <span class="detail-lead">Free to use. Built in the open.</span>
+                </span>
+                <span class="plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="detail-copy">
+                <p>
+                  Every ImageSquid application feature is free and open-source
+                  software. You can clone the same code from the Git repository
+                  and run it yourself, including your own backup and sync.
+                </p>
+              </div>
+            </details>
+          <details class="principle">
+              <summary>
+                <span class="feature-icon">
+                  <img src="assets/c2pa-provenance.svg" alt="" width="48" height="48" />
+                </span>
+                <span class="detail-text">
+                  <span class="detail-title">C2PA provenance</span>
+                  <span class="detail-lead">Believe your eyes. Industry-standard disclosure.</span>
+                </span>
+                <span class="plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="detail-copy">
+                <p>
+                  ImageSquid keeps C2PA Content Credentials with the media, so
+                  you can see how a picture was made, including when AI was
+                  used. The manifest stays with the file, in your library.
+                </p>
+              </div>
+            </details>
+            <details class="principle">
+              <summary>
+                <span class="feature-icon">
+                  <img src="assets/byo-ai.svg" alt="" width="48" height="48" />
+                </span>
+                <span class="detail-text">
+                  <span class="detail-title">Bring your own AI</span>
+                  <span class="detail-lead">Your models. Your provider. Your privacy.</span>
+                </span>
+                <span class="plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="detail-copy">
+                <p>
+                  The actual AI inference models used in ImageSquid processing
+                  tasks and end-user features should remain the user's choice.
+                </p>
+                <p>
+                  ImageSquid can connect to a local AI runner and open-source
+                  model (for example llama.cpp + Gemma 4) using the
+                  industry-standard OpenAI API format, or to the owner's own
+                  supported frontier-provider account; the user pays that
+                  provider directly. This is bring-your-own (BYO) inference. The
+                  AI Connections surface explains that arrangement, including
+                  that encrypted backup does not receive inference traffic and
+                  that a remote endpoint can read what the owner sends.
+                </p>
+              </div>
+            </details>
+            <details class="principle">
+              <summary>
+                <span class="feature-icon">
+                  <img src="assets/long-term-access.svg" alt="" width="48" height="48" />
                 </span>
                 <span class="detail-text">
                   <span class="detail-title">Long-term access</span>
-                  <span class="detail-lead">A proper archive, without becoming an archivist.</span>
+                  <span class="detail-lead">A professional archive, without becoming an archivist.</span>
                 </span>
                 <span class="plus" aria-hidden="true">+</span>
               </summary>
@@ -1427,38 +1493,7 @@
                 </p>
               </div>
             </details>
-            <details class="principle">
-              <summary>
-                <span class="feature-icon">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="11" y="12" width="26" height="25" rx="10" />
-                    <path d="M18 24c0-5 5-5 5 0m3 0c0-5 5-5 5 0M24 6v6M6 24h5m26 0h5M18 37v5m12-5v5" />
-                  </svg>
-                </span>
-                <span class="detail-text">
-                  <span class="detail-title">Private AI processing</span>
-                  <span class="detail-lead">Your models. Your provider. Your decision.</span>
-                </span>
-                <span class="plus" aria-hidden="true">+</span>
-              </summary>
-              <div class="detail-copy">
-                <p>
-                  The actual AI inference models used in ImageSquid processing
-                  tasks and end-user features should remain the user's choice.
-                </p>
-                <p>
-                  ImageSquid can connect to a local AI runner and open-source
-                  model (for example llama.cpp + Gemma 4) using the
-                  industry-standard OpenAI API format, or to the owner's own
-                  supported frontier-provider account; the user pays that
-                  provider directly. This is bring-your-own (BYO) inference. The
-                  AI Connections surface explains that arrangement, including
-                  that encrypted backup does not receive inference traffic and
-                  that a remote endpoint can read what the owner sends.
-                </p>
-              </div>
-            </details>
-          </div>
+            </div>
         </div>
       </section>
 
