@@ -1182,8 +1182,19 @@
         padding-bottom: 1.5rem;
       }
 
-      #your-library .detail-copy p + p {
+      #your-library .detail-copy p + p,
+      #your-library .detail-copy p + ol,
+      #your-library .detail-copy ol + p {
         margin-top: 1rem;
+      }
+
+      #your-library .detail-copy ol {
+        margin: 0;
+        padding-left: 1.25rem;
+      }
+
+      #your-library .detail-copy li + li {
+        margin-top: 0.35rem;
       }
 
       @media (max-width: 900px) {
@@ -1319,22 +1330,61 @@
                 </span>
                 <span class="detail-text">
                   <span class="detail-title">Media ownership</span>
-                  <span class="detail-lead">Local first, yours to keep</span>
+                  <span class="detail-lead">Local first, yours to keep.</span>
                 </span>
                 <span class="plus" aria-hidden="true">+</span>
               </summary>
               <div class="detail-copy">
                 <p>
-                  Media ownership means more than just access to image files: it
-                  means retaining available descriptions, dates, edits,
-                  organization, relationships, and source context that give those
-                  images meaning.
+                  The images matter. So do the descriptions, dates, edits and
+                  relationships you've spent years bringing together.
+                </p>
+                <p>
+                  Retain full control over the files, the edits, and the meaning
+                  you've added.
+                </p>
+                <p>
+                  ImageSquid includes a bulk import feature for most major
+                  commercial photo management app platforms.
+                </p>
+                <p>
+                  The library lives on your computer, works offline, and leaves
+                  with you.
+                </p>
+                <p>
+                  Ownership is not just the image files but also the context and
+                  the meaning around them: descriptions, dates, edits,
+                  organization, and source context.
+                </p>
+                <p>
+                  Originals, edits, and metadata remain exportable if you quit
+                  the app or the hosted service.
                 </p>
                 <p>
                   ImageSquid aims to make independent media ownership convenient.
                   Users should have a fast, capable application for finding,
                   enhancing, enjoying, and sharing their collections across
                   devices and operating systems.
+                </p>
+                <p>
+                  The ImageSquid user experience combines the everyday
+                  convenience of comprehensive applications like Apple Photos
+                  with cross-platform ownership, reliable migration, and
+                  institutional-grade backup.
+                </p>
+                <p>
+                  For example, a single ImageSquid user library can be synced
+                  and used across Windows, macOS and Linux desktops, an online
+                  web app or mobile-web interfaces.
+                </p>
+                <p>
+                  The initial migration of a full image library into ImageSquid
+                  can take a while due to network and computing restrictions.
+                  Therefore, the import process must be robust, able to recover
+                  from errors and pick up where it left off without restarting.
+                  It needs to do this while running quietly in the background,
+                  without blocking or locking active UI use, and ensuring 100%
+                  file copy fidelity.
                 </p>
               </div>
             </details>
@@ -1351,34 +1401,32 @@
               </summary>
               <div class="detail-copy">
                 <p>
-                  ImageSquid libraries remain usable offline, portable between
-                  providers, and exportable if users quit ImageSquid. Optional
-                  hosting and synchronization supports that freedom.
+                  Work offline, move providers, or leave the app. Originals,
+                  enhancements, and metadata leave with you.
                 </p>
                 <p>
-                  ImageSquid's business model is to offer all application
-                  features as free and open-source software and provide a
-                  freemium upgrade for ImageSquid.app backup and syncing
-                  service.
+                  You should be able to leave a provider, work offline, recover
+                  from mistakes, and even leave ImageSquid. Your memories come
+                  with you.
                 </p>
                 <p>
-                  This is a similar approach to the Obsidian note management
-                  tool. Obsidian is free but closed source. With ImageSquid's
-                  open-source license users can clone the same software from our
-                  Git repo and host their own backup and sync infrastructure if
-                  they choose.
-                </p>
-                <p>
-                  To be clear, ImageSquid users must be able to leave a hosting
-                  provider, work offline, recover from mistakes, and leave
-                  ImageSquid the app and the optional online service at any time
-                  without losing original media, subsequent enhancements or
-                  metadata enrichment.
+                  ImageSquid users are able to leave a hosting provider, work
+                  offline, recover from mistakes, and leave ImageSquid the app
+                  and the optional online service at any time without losing
+                  original media, subsequent enhancements or metadata enrichment.
                 </p>
                 <p>
                   This principle and its practical implementation is based
-                  heavily on the Personal Data Server primitive used in the AT
-                  Protocol architecture by platforms like Bluesky.
+                  heavily on the Personal Data Server primitive used by BlueSky
+                  and the AT Protocol architecture.
+                </p>
+                <p>
+                  ImageSquid files are stored as archival OCFL objects. Its
+                  export utilities allow for convenient, bulk image library
+                  exports. Users can respawn a fresh copy of ImageSquid on top
+                  of the OCFL file bundle, use their own filesystem tools to
+                  browse and navigate through the collection, or build new
+                  applications on top of the OCFL object store.
                 </p>
               </div>
             </details>
@@ -1394,10 +1442,27 @@
                 <span class="plus" aria-hidden="true">+</span>
               </summary>
               <div class="detail-copy">
+                <p>One library across Linux, macOS, Windows, and the web.</p>
                 <p>
-                  Every ImageSquid application feature is free and open-source
-                  software. You can clone the same code from the Git repository
-                  and run it yourself, including your own backup and sync.
+                  ImageSquid's MIT open-source license means the code is
+                  available for security and privacy inspection, user community
+                  contributions, and legal integration into existing
+                  architectures and commercial platforms.
+                </p>
+                <p>Optional ImageSquid.app per-fee add-on services:</p>
+                <ol>
+                  <li>Encrypted sync across devices</li>
+                  <li>Encrypted backup at rest for media library</li>
+                  <li>C2PA certificate publication</li>
+                </ol>
+                <p>
+                  This is a similar approach to the Obsidian note management
+                  tool and its freemium model: the app is free and syncing is
+                  provided at a fee. However, one key difference is that
+                  Obsidian is free but closed source while ImageSquid's MIT
+                  open-source license means any organization or company is free
+                  to build their own syncing and backup services if they don't
+                  want to use the one provided by ImageSquid.app.
                 </p>
               </div>
             </details>
@@ -1414,9 +1479,44 @@
               </summary>
               <div class="detail-copy">
                 <p>
-                  ImageSquid keeps C2PA Content Credentials with the media, so
-                  you can see how a picture was made, including when AI was
-                  used. The manifest stays with the file, in your library.
+                  C2PA (Coalition for Content Provenance and Authenticity)
+                  Content Credentials is an open standard that implements
+                  signed, file-bound statements about how an image or video was
+                  created or changed.
+                </p>
+                <p>
+                  Every ImageSquid import starts a durable C2PA record. These
+                  disclose human-generated content, AI-generated content, or a
+                  combination of both.
+                </p>
+                <p>
+                  Prior credentials, generator marks and ImageSquid's later
+                  actions remain auditable using the industry-standard method.
+                </p>
+                <p>
+                  Signed statements travel with the file. Free collection scans
+                  report missing, unsigned, and AI-touched items before you
+                  share.
+                </p>
+                <p>
+                  Paid C2PA publication can add a third-party signed,
+                  watermarked certificate when you need one.
+                </p>
+                <p>
+                  Files shared from ImageSquid will be able to clearly declare
+                  their origin, whether human operator, AI-generated, or a
+                  combination of both.
+                </p>
+                <p>
+                  ImageSquid also adopts the W3C PROV-O PROVenance Ontology, a
+                  widely-used vocabulary for recording who did what to which
+                  resource, providing structure for human and machine-readable
+                  digital audit trails.
+                </p>
+                <p>
+                  These underpin ImageSquid components that can assist in
+                  detecting AI deepfakes while improving AI transparency around
+                  image creation and processing.
                 </p>
               </div>
             </details>
@@ -1433,6 +1533,17 @@
               </summary>
               <div class="detail-copy">
                 <p>
+                  Bring-your-own inference: a local runner or your own provider
+                  account. You pay that provider; backup never sees the traffic.
+                </p>
+                <p>
+                  Albums, search, non-destructive edits, and near-instant
+                  browsing — even while imports and thumbnails run in the
+                  background. Bring your own (BYO) AI: a local runner or your
+                  own provider account. You pay that provider; ImageSquid does
+                  not sell inference.
+                </p>
+                <p>
                   The actual AI inference models used in ImageSquid processing
                   tasks and end-user features should remain the user's choice.
                 </p>
@@ -1441,10 +1552,12 @@
                   model (for example llama.cpp + Gemma 4) using the
                   industry-standard OpenAI API format, or to the owner's own
                   supported frontier-provider account; the user pays that
-                  provider directly. This is bring-your-own (BYO) inference. The
-                  AI Connections surface explains that arrangement, including
-                  that encrypted backup does not receive inference traffic and
-                  that a remote endpoint can read what the owner sends.
+                  provider directly.
+                </p>
+                <p>This is bring-your-own (BYO) inference.</p>
+                <p>
+                  Of course to be sure, using remote endpoints can read what the
+                  owner sends.
                 </p>
               </div>
             </details>
@@ -1461,33 +1574,80 @@
               </summary>
               <div class="detail-copy">
                 <p>
-                  ImageSquid is designed from the perspective of professional
-                  archival collections management. It adopts a long-term view of
-                  the stewardship, findability, usability, and trustworthiness
-                  of the digital files in the system's care.
+                  Professional and open archival formats are used to keep
+                  originals and their context recoverable, into the indefinite
+                  future, independently of the app.
                 </p>
                 <p>
-                  Original media and its accumulated context are preserved using
-                  open archival standards so collections remain recoverable,
-                  understandable, and reusable over time.
+                  ImageSquid files on disk are the canonical source, stored as
+                  OCFL (Oxford Common File Layout) objects — the layout
+                  professional archives use — so a completed library can be
+                  inspected and rebuilt with ordinary file tools.
                 </p>
                 <p>
-                  A key component of this approach is the capability to use the
-                  files that ImageSquid stores on disk as the canonical data
-                  source. If any of the application layer or its indexes are
-                  corrupted or removed, the user will have the option to rebuild
-                  the application layer in full using the source files stored in
-                  OCFL (Oxford Common File Layout) objects.
+                  Behind the scenes, ImageSquid implements the C2PA (Coalition
+                  for Content Provenance and Authenticity) Content Credentials
+                  is an open standard that implements signed, file-bound
+                  statements about how an image or video was created or changed.
                 </p>
                 <p>
-                  OCFL is the digital archives industry's best practice for
-                  storing versioned files and inventories on disk so a
-                  collection remains inspectable and rebuildable with ordinary
-                  file tools, independent of ImageSquid's catalog or an online
-                  platform.
+                  Every ImageSquid import starts a durable C2PA record. These
+                  disclose human-generated content, AI-generated content, or a
+                  combination of both.
                 </p>
                 <p>
-                  ImageSquid brings this discipline and professional design into
+                  Prior credentials, generator marks and ImageSquid's later
+                  actions remain auditable using the industry-standard method.
+                </p>
+                <p>
+                  Signed statements travel with the file. Free collection scans
+                  report missing, unsigned, and AI-touched items before you
+                  share.
+                </p>
+                <p>
+                  Paid C2PA publication can add a third-party signed,
+                  watermarked certificate when you need one.
+                </p>
+                <p>
+                  Files shared from ImageSquid will be able to clearly declare
+                  their origin, whether human operator, AI-generated, or a
+                  combination of both.
+                </p>
+                <p>
+                  ImageSquid also adopts the W3C PROV-O PROVenance Ontology, a
+                  widely-used vocabulary for recording who did what to which
+                  resource, providing structure for human and machine-readable
+                  digital audit trails.
+                </p>
+                <p>
+                  These features underpin ImageSquid components that can assist
+                  in detecting AI deepfakes while improving AI transparency
+                  around image creation and processing.
+                </p>
+                <p>
+                  In addition to C2PA information, PROV-O records, and media
+                  specific metadata like EXIF properties, ImageSquid also allows
+                  users to manage descriptive metadata for their images using
+                  the industry-standard Dublin Core and Schema.org vocabularies.
+                </p>
+                <p>
+                  Other professional vocabularies (e.g. PREMIS) can be added by
+                  users and will be added to future releases.
+                </p>
+                <p>
+                  Each metadata file is managed in the OCFL object for the image
+                  file it describes. This metadata becomes available for
+                  indexing, search, and providing reliable context on which to
+                  assess the image's findability, usability and trustworthiness.
+                </p>
+                <p>
+                  It can also be used in preservation risk assessments to ensure
+                  that image files remain accessible over time despite changes
+                  in OS and application technology, changing format preferences,
+                  etc..
+                </p>
+                <p>
+                  ImageSquid brings professional discipline and design into
                   everyday image management without requiring users to become
                   archivists or system administrators.
                 </p>
