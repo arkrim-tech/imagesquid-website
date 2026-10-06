@@ -1,0 +1,14 @@
+index.html
+  h_10c93bba641ef0 6-45,89-90,101,103-135,257-258,267-268,275,279-321,403,418,491,510,662,1101,1165,1174,1234-1237,1536-1544
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "539ae6d05b82adffbbb9c045a544246f98e5d3be",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
