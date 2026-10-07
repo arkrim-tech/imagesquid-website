@@ -1,0 +1,26 @@
+assets/page.css
+  h_10c93bba641ef0 1-388
+c2pa/index.html
+  h_10c93bba641ef0 1-165
+compare/index.html
+  h_10c93bba641ef0 1-220
+index.html
+  h_10c93bba641ef0 49,51-54,58,60,62-68,70-168,376-387,391,1003-1004,1015-1016,1020-1027,1499-1563,1733-1735,1753,1822,1867,1902,1939,1985,2027,2096-2149,3038,3044-3048
+leave-google-photos/index.html
+  h_10c93bba641ef0 1-151
+robots.txt
+  h_10c93bba641ef0 1-4
+sitemap.xml
+  h_10c93bba641ef0 1-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b85e8a421bdba749261ff298edc3032abc06a790",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
